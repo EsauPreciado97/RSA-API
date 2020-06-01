@@ -56,7 +56,7 @@ def isPrime(n):
 
     return True
 
-def generateKeys(keysize=1024):
+def generateKeys(keysize=32):
     e = d = N = 0
 
     # get prime nums, p & q
