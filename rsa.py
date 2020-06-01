@@ -1,6 +1,9 @@
 import random
 
 def rabinMiller(n, d):
+
+    # Source: https://www.geeksforgeeks.org/primality-test-set-3-miller-rabin/
+
     a = random.randint(2, (n - 2) - 2)
     x = pow(a, int(d), n) # a^d%n
     if x == 1 or x == n - 1:
@@ -46,7 +49,7 @@ def isPrime(n):
     while c % 2 == 0:
         c /= 2 # make c odd
 
-    # prove not prime 128 times
+    # prove not prime 128 times: Key Long Standard
     for i in range(128):
         if not rabinMiller(n, c):
             return False
@@ -64,7 +67,7 @@ def generateKeys(keysize=1024):
     print(f"q: {q}")
 
     N = p * q # RSA Modulus
-    phiN = (p - 1) * (q - 1) # totient
+    phiN = (p - 1) * (q - 1) # Phi
 
     # choose e
     # e is coprime with phiN & 1 < e <= phiN
@@ -85,6 +88,7 @@ def generateLargePrime(keysize):
     """
 
     while True:
+        # Search for a number of keysize randomly
         num = random.randrange(2 ** (keysize - 1), 2 ** keysize - 1)
         if (isPrime(num)):
             return num
@@ -148,22 +152,4 @@ def decrypt(d, N, cipher):
 
     return msg
 
-def main():
-    print("Hello, RSA!")
-
-    keysize = 32
-
-    e, d, N = generateKeys(keysize)
-
-    msg = "Coding the RSA!"
-
-    enc = encrypt(e, N, msg)
-    dec = decrypt(d, N, enc)
-
-    print(f"Message: {msg}")
-    print(f"e: {e}")
-    print(f"d: {d}")
-    print(f"N: {N}")
-    print(f"enc: {enc}")
-    print(f"dec: {dec}")
 
